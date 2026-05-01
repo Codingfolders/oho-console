@@ -1,0 +1,15 @@
+{
+  "name": "ez-console",
+  "version": "1.0.0",
+  "description": "It makes managing the console easy!",
+  "keywords": [
+    "console"
+  ],
+  "license": "ISC",
+  "author": "Codingfolders",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "debug"
+  }
+}
