@@ -3,6 +3,7 @@ let TextColor = '\x1b[0m';
 
 let lastMessage = null;
 
+// =====
 function getTime () {
     const CurrentTime = new Date();
     const OutputTime = {
@@ -13,28 +14,7 @@ function getTime () {
     return OutputTime;
 }
 
-// =====
-
-function msg (level, message, color) {
-    //
-    const Time = getTime();
-
-    if (lastMessage && lastMessage === message) return;
-    lastMessage = message;
-    
-    //
-    if (color) setColor(color);
-
-    const DisplayTime = `${String(Time.hours).padStart(2, '0')}:${String(Time.minutes).padStart(2, '0')}:${String(Time.seconds).padStart(2, '0')}`;
-    const DisplayLevel = level.toUpperCase();
-
-    console.log(TextColor + `[ ${DisplayTime} ${DisplayLevel} ] ${message}` + defaultTextColor);
-    if (color) TextColor = defaultTextColor;
-
-    if (!lastMessage || lastMessage !== message) lastMessage = message;
-}
-
-function setColor (color) {
+function getColor (color) {
     const validColor = [
         'red',
         'yellow',
@@ -52,9 +32,32 @@ function setColor (color) {
 
     const isValid = validColor.includes(color);
     if (!color) return;
-    if (!isValid) return;    
+    if (!isValid) return;
 
-    TextColor = Colors[color];
+    return Colors[color];
+}
+
+// =====
+
+function msg (level, message, color) {
+    // Get Time & 
+    const Time = getTime();
+
+    if (lastMessage && lastMessage === message) return;
+    lastMessage = message;
+    
+    //
+    const DisplayTime = `${String(Time.hours).padStart(2, '0')}:${String(Time.minutes).padStart(2, '0')}:${String(Time.seconds).padStart(2, '0')}`;
+    const DisplayLevel = level.toUpperCase();
+
+    if (color) console.log(getColor(color) + `[ ${DisplayTime} ${DisplayLevel} ] ${message}` + defaultTextColor);
+    else console.log(TextColor + `[ ${DisplayTime} ${DisplayLevel} ] ${message}` + defaultTextColor);
+
+    if (!lastMessage || lastMessage !== message) lastMessage = message;
+}
+
+function setColor (color) {
+    TextColor = getColor(color);
 }
 
 module.exports = {
