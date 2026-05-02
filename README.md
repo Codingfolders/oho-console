@@ -1,2 +1,2 @@
-# EZConsole
+# OhoConsole
 The Console Management Library

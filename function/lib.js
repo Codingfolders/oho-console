@@ -15,18 +15,10 @@ function getTime () {
 
 // =====
 
-function msg (type, message, color) {
+function msg (level, message, color) {
     //
     const Time = getTime();
-    const validType = [
-        'log',
-        'info',
-        'warn',
-        'error'
-    ]
 
-    const isValid = validType.includes(type);
-    if (!isValid) return;
     if (lastMessage && lastMessage === message) return;
     lastMessage = message;
     
@@ -34,9 +26,9 @@ function msg (type, message, color) {
     if (color) setColor(color);
 
     const DisplayTime = `${String(Time.hours).padStart(2, '0')}:${String(Time.minutes).padStart(2, '0')}:${String(Time.seconds).padStart(2, '0')}`;
-    const DisplayType = type.toUpperCase();
+    const DisplayLevel = level.toUpperCase();
 
-    console.log(TextColor + `[ ${DisplayTime} ${DisplayType} ] ${message}` + defaultTextColor);
+    console.log(TextColor + `[ ${DisplayTime} ${DisplayLevel} ] ${message}` + defaultTextColor);
     if (color) TextColor = defaultTextColor;
 
     if (!lastMessage || lastMessage !== message) lastMessage = message;
@@ -47,7 +39,8 @@ function setColor (color) {
         'red',
         'yellow',
         'blue',
-        'green'
+        'green',
+        'white'
     ]
     const Colors = {
         'red': '\x1b[31m',

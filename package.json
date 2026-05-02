@@ -1,6 +1,6 @@
 {
-  "name": "ez-console",
-  "version": "1.0.0",
+  "name": "oho-console",
+  "version": "2.0.0",
   "description": "It makes managing the console easy!",
   "keywords": [
     "console"
@@ -10,6 +10,6 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "debug"
+    "test": "node index.js && node ./function/lib.js"
   }
 }
