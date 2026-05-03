@@ -1,6 +1,6 @@
 {
   "name": "oho-console",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "A lightweight and simple console logging library",
   "keywords": [
     "console"
@@ -9,6 +9,11 @@
   "author": "Codingfolders",
   "type": "commonjs",
   "main": "index.js",
+  "imports": {
+    "#*": [
+      "./*"
+    ]
+  },
   "scripts": {
     "test": "node index.js && node ./function/lib.js"
   }
