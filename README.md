@@ -3,7 +3,7 @@
 
 가볍고 간단한 콘솔 로깅 라이브러리
 
-[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 3.0.0⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
+[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.0.0⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
 
 ## 한국어
 
@@ -19,11 +19,11 @@ Node.js 22버전 이상까지 지원합니다!
 #### 예시 1
 - 코드
 ``` js
-const { msg, ohoSettings } = require('oho-console');
+const { msg, settings } = require('oho-console');
 
-ohoSettings.TextColor('yellow'); // 기본 설정: white
+settings.TextColor('yellow'); // 기본 설정: white
 msg.info('노란색 문자 메시지입니다!'); // 기본 색상으로 출력
-msg.info('빨간색 문자 메시지입니다!', 'red'); // 빨간색으로 출력
+msg.info('빨간색 문자 메시지입니다!', { color: 'red' }); // 빨간색으로 출력
 ```
 - 출력
 ```
@@ -34,12 +34,12 @@ msg.info('빨간색 문자 메시지입니다!', 'red'); // 빨간색으로 출�
 #### 예시 2
 - 코드
 ``` js
-const { msg, ohoSettings } = require('oho-console');
+const { msg, settings } = require('oho-console');
 
 msg.info('이 메시지는 중복되었습니다!'); // 기본 색상으로 출력
 msg.info('이 메시지는 중복되었습니다!'); // 출력 건너뜀
 
-ohoSettings.returnDuplicateMessageEnabled(false); // 기본 설정: true
+settings.returnDuplicateMessageEnabled(false); // 기본 설정: true
 
 msg.info('이 메시지는 중복되었습니다!'); // 기본 색상으로 출력
 msg.info('이 메시지는 중복되었습니다!');
@@ -67,11 +67,11 @@ Supports Node.js version 22 or higher!
 #### Example 1
 - Code
 ``` js
-const { msg, ohoSettings } = require('oho-console');
+const { msg, settings } = require('oho-console');
 
-ohoSettings.TextColor('yellow'); // default Settings: white
+settings.TextColor('yellow'); // default Settings: white
 msg.info('This is a yellow text message!'); // Outputs in the default color
-msg.info('This is a red text message!', 'red'); // Outputs in red
+msg.info('This is a red text message!', { color: 'red' }); // Outputs in red
 ```
 - Output
 ```
@@ -82,12 +82,12 @@ msg.info('This is a red text message!', 'red'); // Outputs in red
 #### Example 2
 - Code
 ``` js
-const { msg, ohoSettings } = require('oho-console');
+const { msg, settings } = require('oho-console');
 
 msg.info('This message is a duplicate!'); // Outputs in the default color
 msg.info('This message is a duplicate!'); // Outputs skipped
 
-ohoSettings.returnDuplicateMessageEnabled(false); // default Settings: true
+settings.returnDuplicateMessageEnabled(false); // default Settings: true
 
 msg.info('This message is a duplicate!'); // Outputs in the default color
 msg.info('This message is a duplicate!');

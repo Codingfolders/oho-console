@@ -1,4 +1,4 @@
 {
-    "TextColor": "white",
+    "colorCode": "\u001b[37m",
     "returnDuplicateMessageEnabled": true
 }

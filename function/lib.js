@@ -1,119 +1,98 @@
-// Environment Variables
+// Normal Variables
 let lastMessage = null;
 
-let settings = require('#settings.json');
+// config load
+let config = require('#config.json');
 
 // sub function
-function MessageFormatComponent (level, message, color) {
-    // get OutputTime
-    const CurrentTime = new Date();
-    const OutputTime = {
-        "hours": CurrentTime.getHours(),
-        "minutes": CurrentTime.getMinutes(),
-        "seconds": CurrentTime.getSeconds()
-    }
-    
-    // Initial Variable
-    const InitialColorCode = '\x1b[0m';
-    
-    // Format config
-    const DisplayTime = `${String(OutputTime.hours).padStart(2, '0')}:${String(OutputTime.minutes).padStart(2, '0')}:${String(OutputTime.seconds).padStart(2, '0')}`;
-    
-    const finalColor = color || settings?.TextColor || '\x1b[37m' || 'white';
-    const ColorCode = getColorCode(finalColor);
+function getColorCode (color = 'white') {
+    try {
+        const colors = [
+            {name: 'red', code: '\x1b[31m'},
+            {name: 'yellow', code: '\x1b[33m'},
+            {name: 'blue', code: '\x1b[34m'},
+            {name: 'green', code: '\x1b[32m'},
+            {name: 'white', code: '\x1b[37m'},
+        ]
 
-    const FormatComponent = `[${DisplayTime} ${level}] ${message}`
-    const finalFormatComponent = `${ColorCode}${FormatComponent}${InitialColorCode}`
-    
-    return finalFormatComponent;
+        const colorCode = colors?.find?.(i => i.name === color)?.code;
+
+        if (!colorCode) return '\x1b[37m';
+
+        return colorCode;
+    } catch (err) {
+        console.error('Error occurred while getting color code:', err);
+        return '\x1b[37m';
+    }
 }
 
-function getColorCode (color = 'white') {
-    const colorsCode = {
-        "red": "\x1b[31m",
-        "yellow": "\x1b[33m",
-        "blue": "\x1b[34m",
-        "green": "\x1b[32m",
-        "white": "\x1b[37m"
-    }
+function FormattedMessageOutput (level, message, options = {}) {
+    if (!options.isImportant && config?.returnDuplicateMessageEnabled && message === lastMessage) return;
 
-    if (!colorsCode[color]) return colorsCode['white'];
-    return colorsCode[color];
+    try {
+        // get OutputTime
+        const now = new Date();
+        
+        // Initial Variable
+        const initialColorCode = '\x1b[0m';
+
+        // Format
+        const formattedTime = new Intl.DateTimeFormat('sv-SE', { timeStyle: 'medium' }).format(now);
+        const colorCode = options?.color ? getColorCode?.(options?.color) : (config?.colorCode ?? initialColorCode);
+        const formattedMessage = colorCode + `[${formattedTime} ${level.toUpperCase()}] ${message}` + initialColorCode;
+        
+        console[level](formattedMessage);
+
+        lastMessage = message;
+    } catch (err) {
+        console.error('Error occurred while formatting message:', err);
+    }
+}
+
+function FormattedListOutput (args = [], options = {}) {
+    try {
+        const messages = args.map((i) => `${options.character || '-'} ${i}`);
+        console.info(`${options?.title ?? 'List'}\n${messages.join('\n')}`);
+    } catch (err) {
+        console.error('Error occurred while creating list:', err);
+    }
 }
 
 // main function
-const ohoSettings = {
-    TextColor: function (color = 'white') {
-        const colorsName =  [
-            "red",
-            "yellow",
-            "blue",
-            "green",
-            "white"
-        ]
-        if (!colorsName.includes(color)) return;
-    
-        settings.TextColor = color;
+const settings = {
+    TextColor: function (color) {
+        config.colorCode = getColorCode?.(color);
     },
     returnDuplicateMessageEnabled: function (isEnabled = true) {
-        if (typeof isEnabled !== 'boolean') return;
-        settings.returnDuplicateMessageEnabled = isEnabled;
+        if (typeof isEnabled === 'boolean') config.returnDuplicateMessageEnabled = isEnabled;
     }
 }
 
 const msg = {
-    log: function (message = '', color = settings.TextColor, isImportant = false) {
-        // If the last message and the current message match (ignore duplicate when not isImportant)
-        if (!isImportant && settings.returnDuplicateMessageEnabled && message === lastMessage) return;
-
-        const level = 'LOG';
-        const Format = MessageFormatComponent(level, message, color, isImportant);
-
-        console.log(Format);
-
-        // last message update
-        lastMessage = message;
+    log: function (message = '', options = {}) {
+        FormattedMessageOutput('log', message, options);
     },
-    info: function (message = '', color = settings.TextColor, isImportant = false) {
-        // If the last message and the current message match (ignore duplicate when not isImportant)
-        if (!isImportant && settings.returnDuplicateMessageEnabled && message === lastMessage) return;
-
-        const level = 'INFO';
-        const Format = MessageFormatComponent(level, message, color, isImportant);
-
-        console.log(Format);
-
-        // last message update
-        lastMessage = message;
+    info: function (message = '', options = {}) {
+        FormattedMessageOutput('info', message, options);
     },
-    warn: function (message = '', color = settings.TextColor, isImportant = false) {
-        // If the last message and the current message match (ignore duplicate when not isImportant)
-        if (!isImportant && settings.returnDuplicateMessageEnabled && message === lastMessage) return;
-
-        const level = 'WARN';
-        const Format = MessageFormatComponent(level, message, color, isImportant);
-
-        console.log(Format);
-
-        // last message update
-        lastMessage = message;
+    warn: function (message = '', options = {}) {
+        FormattedMessageOutput('warn', message, options);
     },
-    error: function (message = '', color = settings.TextColor, isImportant = false) {
-        // If the last message and the current message match (ignore duplicate when not isImportant)
-        if (!isImportant && settings.returnDuplicateMessageEnabled && message === lastMessage) return;
+    error: function (message = '', options = {}) {
+        FormattedMessageOutput('error', message, options);
+    },
+    list: function (args = [], options = {}) {
+        if (!Array.isArray(args)) {
+            console.error('The first argument must be an array.');
+            return;
+        }
 
-        const level = 'ERROR';
-        const Format = MessageFormatComponent(level, message, color, isImportant);
-
-        console.log(Format);
-
-        // last message update
-        lastMessage = message;
-1    }
+        FormattedListOutput(args, options);
+    }
 }
 
 // module exports
 module.exports = {
-    ohoSettings,
+    settings,
     msg
 }
