@@ -3,11 +3,10 @@
 
 가볍고 간단한 콘솔 로깅 라이브러리
 
-[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.0.0⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
+[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.0.1⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
 
 ## 한국어
-
-Node.js 22버전 이상까지 지원합니다!
+Node.js 14버전 이상까지 지원합니다!
 
 ### 주요 기능
 - **자동 타임스탬프: `[ 15:30:00 INFO ]` 형식으로 출력 시간 자동 표시**
@@ -55,7 +54,7 @@ msg.info('이 메시지는 중복되었습니다!');
 
 ## English
 
-Supports Node.js version 22 or higher!
+Supports Node.js version 14 or higher!
 
 ### Key Features 
 - **Automatic Timestamp: Displays the time in `[ 15:30:00 INFO ]` format**
