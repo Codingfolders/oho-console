@@ -1,4 +1,8 @@
 {
-    "colorCode": "\u001b[37m",
+    "colorCode": {
+        "info": "\u001b[37m",
+        "warn": "\u001b[33m",
+        "error": "\u001b[31m"
+    },
     "returnDuplicateMessageEnabled": true
 }

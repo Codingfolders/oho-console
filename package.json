@@ -1,6 +1,6 @@
 {
   "name": "oho-console",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "A lightweight and simple console logging library",
   "keywords": [
     "console"
@@ -13,5 +13,8 @@
     "#*": [
       "./*"
     ]
+  },
+  "scripts": {
+    "test": "node --test index.js"
   }
 }

@@ -17,7 +17,7 @@ function GetColorCode (color = 'white') {
 
         const colorCode = colors[color];
 
-        return colorCode ? colorCode : '\x1b[37m';
+        return colorCode || '\x1b[37m';
     } catch (err) {
         return '\x1b[37m';
     }
@@ -32,8 +32,8 @@ function FormattedMessageOutput (level, message, options = {}) {
         
         const initialColorCode = '\x1b[0m';
 
-        const formattedTime = new Intl.DateTimeFormat('sv-SE', { timeStyle: 'medium' }).format(now);    
-        const colorCode = options?.color ? GetColorCode?.(options?.color) : (config?.colorCode ?? initialColorCode);
+        const formattedTime = new Intl.DateTimeFormat('sv-SE', { timeStyle: 'medium' }).format(now);
+        const colorCode = options?.color ? GetColorCode?.(options?.color) : (config?.colorCode[level] ?? initialColorCode);
         const formattedMessage = colorCode + `[${formattedTime} ${level.toUpperCase()}] ${message}` + initialColorCode;
 
         console[level](formattedMessage);
@@ -48,7 +48,8 @@ function FormattedListOutput (args = [], options = {}) {
     try {
         const messages = args.map((i) => `${options.character || '-'} ${i}`);
         
-        console.info(`${options?.title ?? 'List'}\n${messages.join('\n')}`);
+        console.info(options?.title ?? 'List');
+        console.info(messages.join('\n'));
     } catch (err) {
         console.error('Error occurred while creating list:', err);
     }
@@ -56,10 +57,21 @@ function FormattedListOutput (args = [], options = {}) {
 
 // main function
 const settings = {
-    TextColor: function (color) {
-        config.colorCode = GetColorCode?.(color);
-    },
-    returnDuplicateMessageEnabled: function (isEnabled = true) {
+    TextColor: function (color, level) {
+        if (!level || level === 'all') {
+            const colorCode = GetColorCode(color);
+
+            if (!config.colorCode) return;
+
+            Object.keys(config.colorCode).forEach(key => {
+                config.colorCode[key] = colorCode;
+            })
+
+            return;
+        }
+        
+        config.colorCode[level] = GetColorCode?.(color);
+    }, returnDuplicateMessageEnabled: function (isEnabled) {
         if (typeof isEnabled === 'boolean') config.returnDuplicateMessageEnabled = isEnabled;
     }
 }

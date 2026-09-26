@@ -3,7 +3,7 @@
 
 가볍고 간단한 콘솔 로깅 라이브러리
 
-[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.0.1⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
+[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.1.0⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
 
 ## 한국어
 Node.js 14버전 이상까지 지원합니다!
@@ -14,24 +14,35 @@ Node.js 14버전 이상까지 지원합니다!
 - **색상 지원: 빨간색, 노란색, 파란색, 초록색, 흰색 색상 적용으로 가독성 향상**
 - **중복 메시지 방지: 이전과 동일한 메시지 출력 생략으로 가독성 향상**
 
-### 사용 예시
+### v4.1.0 변경 사항
+- **텍스트 색상 변경: 로깅 레벨에 따라 기본 색상을 다르게 설정할 수 있습니다!**
+- **API 설명 추가: 매개변수와 옵션에 관한 설명을 표기했습니다.**
+
+### 메시지 기본 색상
+| 로깅 레벨 | 기본 색상 |
+| - | - |
+| info | 하얀색 |
+| warn | 노란색 |
+| error | 빨간색 |
+
+### 코드 예시 & 출력 예시
 #### 예시 1
-- 코드
+코드
 ``` js
 const { msg, settings } = require('oho-console');
 
-settings.TextColor('yellow'); // 기본 설정: white
+settings.TextColor('yellow'); // 기본 색상: 메시지 기본 색상표 참고
 msg.info('노란색 문자 메시지입니다!'); // 기본 색상으로 출력
 msg.info('빨간색 문자 메시지입니다!', { color: 'red' }); // 빨간색으로 출력
 ```
-- 출력
+출력
 ```
 [ 15:30:00 INFO ] 노란색 문자 메시지입니다!
 [ 15:30:00 INFO ] 빨간색 문자 메시지입니다!
 ```
 
 #### 예시 2
-- 코드
+코드
 ``` js
 const { msg, settings } = require('oho-console');
 
@@ -42,8 +53,8 @@ settings.returnDuplicateMessageEnabled(false); // 기본 설정: true
 
 msg.info('이 메시지는 중복되었습니다!'); // 기본 색상으로 출력
 msg.info('이 메시지는 중복되었습니다!');
-```
-- 출력
+
+출력
 ```
 [ 15:30:00 INFO ] 이 메시지는 중복되었습니다!
 [ 15:30:00 INFO ] 이 메시지는 중복되었습니다!
@@ -62,24 +73,34 @@ Supports Node.js version 14 or higher!
 - **Color Support: Enhances readability with Red, Yellow, Blue, Green, and White**
 - **Duplicate Message Prevention: Keep your console clean by skipping identical consecutive messages**
 
-### Usage Example
+### v4.1.0 Change Log
+- **Text color change: Can set different default colors depending on the logging level! (Maintain existing compatibility)**
+
+### Message default colors
+| Logging level | Default color |
+| - | - |
+| info | white |
+| warn | yellow |
+| error | red |
+
+### Code Examples & Output Examples
 #### Example 1
-- Code
+Code
 ``` js
 const { msg, settings } = require('oho-console');
 
-settings.TextColor('yellow'); // default Settings: white
+settings.TextColor('yellow'); // default Settings: Please refer to The Message default colors table
 msg.info('This is a yellow text message!'); // Outputs in the default color
 msg.info('This is a red text message!', { color: 'red' }); // Outputs in red
 ```
-- Output
+Output
 ```
 [ 15:30:00 INFO ] This is a yellow text message!
 [ 15:30:00 INFO ] This is a red text message!
 ```
 
 #### Example 2
-- Code
+Code
 ``` js
 const { msg, settings } = require('oho-console');
 
@@ -91,7 +112,7 @@ settings.returnDuplicateMessageEnabled(false); // default Settings: true
 msg.info('This message is a duplicate!'); // Outputs in the default color
 msg.info('This message is a duplicate!');
 ```
-- Output
+Output
 ```
 [ 15:30:00 INFO ] This message is a duplicate!
 [ 15:30:00 INFO ] This message is a duplicate!
