@@ -74,7 +74,8 @@ Supports Node.js version 14 or higher!
 - **Duplicate Message Prevention: Keep your console clean by skipping identical consecutive messages**
 
 ### v4.1.0 Change Log
-- **Text color change: Can set different default colors depending on the logging level! (Maintain existing compatibility)**
+- **Text color change: Can set different default colors depending on the logging level!**
+- **Add API Description: Explanations regarding parameters and options are provided.**
 
 ### Message default colors
 | Logging level | Default color |
