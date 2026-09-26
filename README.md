@@ -3,7 +3,7 @@
 
 가볍고 간단한 콘솔 로깅 라이브러리
 
-[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.1.0⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
+[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.1.1⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
 
 ## 한국어
 Node.js 14버전 이상까지 지원합니다!
@@ -14,9 +14,10 @@ Node.js 14버전 이상까지 지원합니다!
 - **색상 지원: 빨간색, 노란색, 파란색, 초록색, 흰색 색상 적용으로 가독성 향상**
 - **중복 메시지 방지: 이전과 동일한 메시지 출력 생략으로 가독성 향상**
 
-### v4.1.0 변경 사항
+### v4.1.1 변경 사항
 - **텍스트 색상 변경: 로깅 레벨에 따라 기본 색상을 다르게 설정할 수 있습니다!**
 - **API 설명 추가: 매개변수와 옵션에 관한 설명을 표기했습니다.**
+- **README 오타 수정: 마크다운 문법 누락 문제를 해결했습니다**
 
 ### 메시지 기본 색상
 | 로깅 레벨 | 기본 색상 |
@@ -53,6 +54,7 @@ settings.returnDuplicateMessageEnabled(false); // 기본 설정: true
 
 msg.info('이 메시지는 중복되었습니다!'); // 기본 색상으로 출력
 msg.info('이 메시지는 중복되었습니다!');
+```
 
 출력
 ```
@@ -73,9 +75,10 @@ Supports Node.js version 14 or higher!
 - **Color Support: Enhances readability with Red, Yellow, Blue, Green, and White**
 - **Duplicate Message Prevention: Keep your console clean by skipping identical consecutive messages**
 
-### v4.1.0 Change Log
+### v4.1.1 Change Log
 - **Text color change: Can set different default colors depending on the logging level!**
 - **Add API Description: Explanations regarding parameters and options are provided.**
+- **README Typo Correction: Fixed missing Markdown syntax issue**
 
 ### Message default colors
 | Logging level | Default color |
