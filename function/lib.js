@@ -4,39 +4,24 @@ let lastMessage = null;
 // Configuration
 let config = require('#config.json');
 
-// sub function
-function GetColorCode (color = 'white') {
-    try {
-        const colors = {
-            red: '\x1b[31m',
-            yellow: '\x1b[33m',
-            blue: '\x1b[34m',
-            green: '\x1b[32m',
-            white: '\x1b[37m'
-        }
+// File Link
+const { GetColorCode } = require('#function/Color.js');
 
-        const colorCode = colors[color];
-
-        return colorCode || '\x1b[37m';
-    } catch (err) {
-        return '\x1b[37m';
-    }
-}
-
-function FormattedMessageOutput (level, message, options = {}) {
+// FormattedMessageOutput Logic
+function FormattedMessageOutput (level, message, { color, isImportant = false }) {
     // current message and last message, returnDuplicateMessageEnabled config check
-    if (!options.isImportant && config.returnDuplicateMessageEnabled && message === lastMessage) return;
+    if (!isImportant && config.returnDuplicateMessageEnabled && message === lastMessage) return;
 
     try {
         const now = new Date();
         
         const initialColorCode = '\x1b[0m';
-
+        
         const formattedTime = new Intl.DateTimeFormat('sv-SE', { timeStyle: 'medium' }).format(now);
-        const colorCode = options?.color ? GetColorCode?.(options?.color) : (config?.colorCode[level] ?? initialColorCode);
+        const colorCode = color ? GetColorCode?.(color) : (config?.colorCode[String(level)] || initialColorCode);
         const formattedMessage = colorCode + `[${formattedTime} ${level.toUpperCase()}] ${message}` + initialColorCode;
 
-        console[level](formattedMessage);
+        console[String(level)](formattedMessage);
         
         lastMessage = message;
     } catch (err) {
@@ -44,11 +29,12 @@ function FormattedMessageOutput (level, message, options = {}) {
     }
 }
 
-function FormattedListOutput (args = [], options = {}) {
+// FormattedListOutput Logic
+function FormattedListOutput (args = [], { character = '-', title = 'List' }) {
     try {
-        const messages = args.map((i) => `${options.character || '-'} ${i}`);
+        const messages = args.map(item => `${character} ${item}`);
         
-        console.info(options?.title ?? 'List');
+        console.info(title);
         console.info(messages.join('\n'));
     } catch (err) {
         console.error('Error occurred while creating list:', err);
@@ -64,13 +50,11 @@ const settings = {
             if (!config.colorCode) return;
 
             Object.keys(config.colorCode).forEach(key => {
-                config.colorCode[key] = colorCode;
+                config.colorCode[String(key)] = colorCode;
             })
-
-            return;
         }
         
-        config.colorCode[level] = GetColorCode?.(color);
+        config.colorCode[String(level)] = GetColorCode?.(color);
     }, returnDuplicateMessageEnabled: function (isEnabled) {
         if (typeof isEnabled === 'boolean') config.returnDuplicateMessageEnabled = isEnabled;
     }

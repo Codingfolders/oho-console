@@ -3,7 +3,7 @@
 
 가볍고 간단한 콘솔 로깅 라이브러리
 
-[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.1.1⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
+[⌈github repository⌋](https://github.com/Codingfolders/oho-console/) | [⌈npm library ¦ 4.1.2⌋](https://www.npmjs.com/package/oho-console) | [⌈한국어⌋](#한국어) | [⌈English⌋](#english)
 
 ## 한국어
 Node.js 14버전 이상까지 지원합니다!
