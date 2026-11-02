@@ -25,12 +25,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Codingfolders/oho-console.git"
-  },
-  "scripts": {
-    "test": "node index.js",
-    "cont-int": "npx eslint ."
-  },
-  "devDependencies": {
-    "eslint-plugin-security": "^4.2.1"
   }
 }
